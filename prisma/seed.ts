@@ -1,6 +1,13 @@
 const { PrismaClient } = require("@prisma/client");
+const fs = require("fs");
+const path = require("path");
 
 const prisma = new PrismaClient();
+
+const imageToBlob = (imagePath: string): Buffer => {
+  let _imagePath = imagePath.replace("./", __dirname + "/");
+  return fs.readFileSync(path.resolve(_imagePath));
+};
 
 async function seedDatabase() {
   try {
@@ -73,8 +80,8 @@ async function seedDatabase() {
             create: {
               image: {
                 create: {
-                  png: comment.user.image.png,
-                  webp: comment.user.image.webp,
+                  png: imageToBlob(comment.user.image.png),
+                  webp: imageToBlob(comment.user.image.webp),
                 },
               },
               username: comment.user.username,

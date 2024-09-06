@@ -3,6 +3,14 @@ import { db } from "./_lib/prisma";
 import { User } from "lucide-react";
 // import Reply from "../../public/reply.svg";
 
+const getImageUrl = (image: Buffer) => {
+  // const blob = new Blob([image]);
+  // const url = URL.createObjectURL(blob);
+  const base64String = image.toString("base64");
+  const url = `data:image/jpeg;base64,${base64String}`;
+  return url;
+};
+
 export default async function Home() {
   const comments = await db.comment.findMany({
     include: { user: { include: { image: true } } },
@@ -17,17 +25,19 @@ export default async function Home() {
             {/* Header */}
             <div className="flex">
               {/* Profile pic */}
-              {/* {comment.user.image?.png ? (
-                <Image
-                  alt="profile-pic"
-                  src={comment.user.image?.png}
-                  className="rounded-full"
-                  width={32}
-                  height={32}
-                />
+              {comment.user.image?.png ? (
+                <div>
+                  <Image
+                    alt="profile-pic"
+                    src={getImageUrl(comment.user.image?.png)}
+                    className="rounded-full"
+                    width={32}
+                    height={32}
+                  />
+                </div>
               ) : (
                 <User />
-              )} */}
+              )}
 
               {/* Username */}
               <div>{comment.user.username}</div>

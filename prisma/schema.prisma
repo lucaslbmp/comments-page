@@ -15,8 +15,8 @@ datasource db {
 
 model UserImage {
   id     String @id @default(cuid())
-  png    String
-  webp   String
+  png    Bytes
+  webp   Bytes
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
 }
