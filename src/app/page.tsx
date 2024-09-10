@@ -7,6 +7,9 @@ export default async function Home() {
       user: { include: { image: true } },
       rootReplies: { include: { user: { include: { image: true } } } },
     },
+    where: {
+      parentId: null,
+    },
   });
 
   const user = await db.user.findFirst({ where: { username: "juliusomo" } });
