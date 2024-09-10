@@ -1,8 +1,11 @@
 import { FullComment, FullCommentWithReplies } from "../_types";
 import Image from "next/image";
-// import {
-//   User as UserIcon,
-// } from "lucide-react";
+import {
+  User as UserIcon,
+  Plus as PlusSign,
+  Minus as MinusSign,
+} from "lucide-react";
+import { formatDistance } from "date-fns";
 
 type CommentCardProps = {
   comment: FullCommentWithReplies | FullComment;
@@ -18,27 +21,20 @@ const CommentCard = ({ comment, isFromUser }: CommentCardProps) => {
     return url;
   };
 
+  const timePastDate = (date: Date) =>
+    formatDistance(date, new Date(), { addSuffix: true });
+
   return (
     <div className="flex bg-cardBg p-6 gap-6 w-full">
       {/* Score Counter */}
       <div className="basis-[42px] flex flex-col">
         <div className="bg-background rounded-lg flex flex-col gap-6 items-center my-auto">
           <button className="text-xl font-extrabold leading-4 mt-3 text-fgSecondaryLight">
-            <Image
-              width={11}
-              height={11}
-              alt="plus"
-              src="/icons/icon-plus.svg"
-            />
+            <PlusSign size={11} />
           </button>
           <div className="text-fgSecondary font-semibold">{comment.score}</div>
           <button className="text-xl font-extrabold leading-4 mb-3 text-fgSecondaryLight">
-            <Image
-              width={11}
-              height={11}
-              alt="minus"
-              src="/icons/icon-minus.svg"
-            />
+            <MinusSign size={11} />
           </button>
         </div>
       </div>
@@ -50,7 +46,7 @@ const CommentCard = ({ comment, isFromUser }: CommentCardProps) => {
           {comment.user.image?.png ? (
             <div>
               <Image
-                alt="Profile pic"
+                alt="profile-pic"
                 src={getImageUrl(comment.user.image?.png)}
                 className="rounded-full"
                 width={32}
@@ -58,14 +54,7 @@ const CommentCard = ({ comment, isFromUser }: CommentCardProps) => {
               />
             </div>
           ) : (
-            <div>
-              <Image
-                width={11}
-                height={11}
-                alt="User icon"
-                src="/icons/icon-user.svg"
-              />
-            </div>
+            <UserIcon />
           )}
 
           {/* Username */}
@@ -77,7 +66,8 @@ const CommentCard = ({ comment, isFromUser }: CommentCardProps) => {
           )}
 
           {/* Comment date */}
-          <div>{new Date(comment.createdAt).toLocaleDateString()}</div>
+          {/* <div>{new Date(comment.createdAt).toLocaleDateString()}</div> */}
+          <div>{timePastDate(new Date(comment.createdAt))}</div>
 
           {/* Buttons button */}
           <div className="flex-1 flex justify-end gap-6">
