@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
+  /* --fgPrimary: #8F9195;
+  --background: #F5F6F9;
+  --cardBg: #ffffff; */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -12,9 +14,10 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-}
+/* body {
+  color: rgb(var(--fgPrimary));
+  background-color: var(--background);
+} */
 
 @layer utilities {
   .text-balance {

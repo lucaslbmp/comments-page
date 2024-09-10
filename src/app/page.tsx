@@ -9,9 +9,15 @@ export default async function Home() {
     },
   });
 
+  const user = await db.user.findFirst({ where: { username: "juliusomo" } });
+
   return (
-    <main className="flex min-h-screen flex-col items-start justify-between p-24 w-max">
-      <CommentSection comments={comments} />
+    <main className="flex min-h-screen max-w-[100vw] flex-col justify-between py-24 px-12 w-full items-center">
+      <CommentSection
+        comments={comments}
+        user={user}
+        className="max-w-[743px]"
+      />
     </main>
   );
 }
