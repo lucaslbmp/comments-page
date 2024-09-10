@@ -29,11 +29,17 @@ model User {
 }
 
 model Comment {
-  id        String   @id @default(cuid())
-  content   String
-  score     Int
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String    @id @default(cuid())
+  content       String
+  score         Int
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id])
+  rootCommentId String? // Reference to the root comment
+  rootComment   Comment?  @relation("RootCommentReplies", fields: [rootCommentId], references: [id])
+  rootReplies   Comment[] @relation("RootCommentReplies")
+  parentId      String? // Reference to the direct parent comment
+  parent        Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  children      Comment[] @relation("CommentReplies")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
