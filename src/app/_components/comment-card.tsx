@@ -1,3 +1,5 @@
+"use client";
+
 import { FullComment, FullCommentWithReplies } from "../_types";
 import Image from "next/image";
 import {
@@ -6,6 +8,8 @@ import {
   Minus as MinusSign,
 } from "lucide-react";
 import { formatDistance } from "date-fns";
+import { useState } from "react";
+import updateComment from "../_actions/update-comment";
 
 type CommentCardProps = {
   comment: FullCommentWithReplies | FullComment;
@@ -13,10 +17,12 @@ type CommentCardProps = {
 };
 
 const CommentCard = ({ comment, isFromUser }: CommentCardProps) => {
+  const { id, score } = comment;
+
   const getImageUrl = (image: Buffer) => {
     // const blob = new Blob([image]);
     // const url = URL.createObjectURL(blob);
-    const base64String = image.toString("base64");
+    const base64String = Buffer.from(image)?.toString("base64");
     const url = `data:image/jpeg;base64,${base64String}`;
     return url;
   };
@@ -24,16 +30,32 @@ const CommentCard = ({ comment, isFromUser }: CommentCardProps) => {
   const timePastDate = (date: Date) =>
     formatDistance(date, new Date(), { addSuffix: true });
 
+  const handleRaiseScore = async (id: string, score: number) => {
+    await updateComment({ id, score: score + 1 });
+  };
+
+  const handleLowerScore = async (id: string, score: number) => {
+    await updateComment({ id, score: score - 1 });
+  };
+
   return (
     <div className="flex bg-cardBg p-6 gap-6 w-full">
       {/* Score Counter */}
       <div className="basis-[42px] flex flex-col">
         <div className="bg-background rounded-lg flex flex-col gap-6 items-center my-auto">
-          <button className="text-xl font-extrabold leading-4 mt-3 text-fgSecondaryLight">
+          <button
+            className="text-xl font-extrabold leading-4 mt-3 text-fgSecondaryLight"
+            onClick={() => handleRaiseScore(id, score)}
+          >
             <PlusSign size={11} />
           </button>
+
           <div className="text-fgSecondary font-semibold">{comment.score}</div>
-          <button className="text-xl font-extrabold leading-4 mb-3 text-fgSecondaryLight">
+
+          <button
+            className="text-xl font-extrabold leading-4 mb-3 text-fgSecondaryLight"
+            onClick={() => handleLowerScore(id, score)}
+          >
             <MinusSign size={11} />
           </button>
         </div>
@@ -66,7 +88,6 @@ const CommentCard = ({ comment, isFromUser }: CommentCardProps) => {
           )}
 
           {/* Comment date */}
-          {/* <div>{new Date(comment.createdAt).toLocaleDateString()}</div> */}
           <div>{timePastDate(new Date(comment.createdAt))}</div>
 
           {/* Buttons button */}

@@ -10,6 +10,9 @@ export default async function Home() {
     where: {
       parentId: null,
     },
+    orderBy: {
+      createdAt: "asc",
+    },
   });
 
   const user = await db.user.findFirst({ where: { username: "juliusomo" } });
@@ -17,7 +20,7 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen max-w-[100vw] flex-col justify-between py-24 px-12 w-full items-center">
       <CommentSection
-        comments={comments}
+        comments={comments.map((comm) => JSON.parse(JSON.stringify(comm)))}
         user={user}
         className="max-w-[743px]"
       />
