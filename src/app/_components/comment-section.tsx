@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 import { FullComment, FullCommentWithReplies } from "../_types";
-import CommentCard from "./comment-card";
+import CommentBox from "./comment-box";
 
 type CommentSectionProps = {
   comments: FullCommentWithReplies[] | FullComment[];
@@ -13,7 +13,7 @@ const CommentSection = ({ comments, className, user }: CommentSectionProps) => {
     <div className={"flex flex-col gap-4 " + (className ?? "")}>
       {comments?.map((comment) => (
         <div key={comment.id}>
-          <CommentCard
+          <CommentBox
             comment={comment}
             isFromUser={comment.user.id === user?.id}
           />

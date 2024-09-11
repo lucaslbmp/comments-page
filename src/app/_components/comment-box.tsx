@@ -11,12 +11,12 @@ import { formatDistance } from "date-fns";
 import { useState } from "react";
 import updateComment from "../_actions/update-comment";
 
-type CommentCardProps = {
+type CommentBoxProps = {
   comment: FullCommentWithReplies | FullComment;
   isFromUser: boolean;
 };
 
-const CommentCard = ({ comment, isFromUser }: CommentCardProps) => {
+const CommentBox = ({ comment, isFromUser }: CommentBoxProps) => {
   const { id, score } = comment;
 
   const getImageUrl = (image: Buffer) => {
@@ -140,4 +140,4 @@ const CommentCard = ({ comment, isFromUser }: CommentCardProps) => {
   );
 };
 
-export default CommentCard;
+export default CommentBox;
