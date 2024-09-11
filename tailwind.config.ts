@@ -15,10 +15,12 @@ const config: Config = {
       },
       colors: {
         background: "#F5F6F9",
+        primary: "#605FA2",
         cardBg: "#ffffff",
         fgPrimary: "#8F9195",
         fgSecondary: "#7271aa",
         fgSecondaryLight: "#7777AA",
+        border: "#686787",
         danger: "#D8878B",
       },
     },
