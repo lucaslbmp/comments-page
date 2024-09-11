@@ -32,7 +32,7 @@ model Comment {
   id            String    @id @default(cuid())
   content       String
   score         Int
-  userId        String    @unique
+  userId        String
   user          User      @relation(fields: [userId], references: [id])
   rootCommentId String? // Reference to the root comment
   rootComment   Comment?  @relation("RootCommentReplies", fields: [rootCommentId], references: [id])
