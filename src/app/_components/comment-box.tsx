@@ -10,6 +10,7 @@ import {
 import { formatDistance } from "date-fns";
 import { useState } from "react";
 import updateComment from "../_actions/update-comment";
+import { getImageUrl } from "../_utils";
 
 type CommentBoxProps = {
   comment: FullCommentWithReplies | FullComment;
@@ -18,14 +19,6 @@ type CommentBoxProps = {
 
 const CommentBox = ({ comment, isFromUser }: CommentBoxProps) => {
   const { id, score } = comment;
-
-  const getImageUrl = (image: Buffer) => {
-    // const blob = new Blob([image]);
-    // const url = URL.createObjectURL(blob);
-    const base64String = Buffer.from(image)?.toString("base64");
-    const url = `data:image/jpeg;base64,${base64String}`;
-    return url;
-  };
 
   const timePastDate = (date: Date) =>
     formatDistance(date, new Date(), { addSuffix: true });
