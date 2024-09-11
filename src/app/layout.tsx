@@ -16,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className + " bg-background text-fgPrimary"}>
+      <body
+        className={
+          inter.className + " bg-background text-fgPrimary text-[14px]"
+        }
+      >
         {children}
       </body>
     </html>
