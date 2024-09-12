@@ -11,14 +11,22 @@ import { formatDistance } from "date-fns";
 import { useState } from "react";
 import updateComment from "../_actions/update-comment";
 import { getImageUrl } from "../_utils";
+import EditableCommentBox from "./editable-comment-box";
+import { Prisma } from "@prisma/client";
+import TextArea from "./text-area";
+import Button from "./button";
+import submitComment from "../_actions/submit-comment";
 
 type CommentBoxProps = {
   comment: FullCommentWithReplies | FullComment;
-  isFromUser: boolean;
+  user: Prisma.UserGetPayload<{ include: { image: true } }>;
 };
 
-const CommentBox = ({ comment, isFromUser }: CommentBoxProps) => {
+const CommentBox = ({ comment, user }: CommentBoxProps) => {
   const { id, score } = comment;
+  const isFromUser = comment.user.id === user?.id;
+
+  const [editCommentIsOpen, setEditCommentIsOpen] = useState(false);
 
   const timePastDate = (date: Date) =>
     formatDistance(date, new Date(), { addSuffix: true });
@@ -107,7 +115,13 @@ const CommentBox = ({ comment, isFromUser }: CommentBoxProps) => {
                   <span className="text-danger font-bold">Delete</span>
                 </button>
 
-                <button className="flex items-center gap-2">
+                <button
+                  className="flex items-center gap-2"
+                  // onClick={(e) =>
+                  //   handleEditComment(comment.id, e?.currentTarget?.value)
+                  // }
+                  onClick={() => setEditCommentIsOpen((state) => !state)}
+                >
                   <Image
                     width={14}
                     height={14}
@@ -122,12 +136,36 @@ const CommentBox = ({ comment, isFromUser }: CommentBoxProps) => {
         </div>
 
         {/* Content */}
-        <div className="mt-4">
-          <span className="text-fgSecondary font-semibold">
-            @{comment.user.username}{" "}
-          </span>
-          <span>{comment.content}</span>
-        </div>
+        <form
+          className="mt-4"
+          action={async (data) => {
+            await submitComment({
+              data,
+              commentId: comment.id,
+              userId: user.id,
+            });
+            setEditCommentIsOpen(false);
+          }}
+        >
+          {!editCommentIsOpen ? (
+            <>
+              <span className="text-fgSecondary font-semibold">
+                @{comment.user.username}{" "}
+              </span>
+              <span>{comment.content}</span>
+            </>
+          ) : (
+            <>
+              <TextArea name="comment-content" defaultValue={comment.content} />
+              <Button
+                type="submit"
+                //onClick={() => setEditCommentIsOpen(false)}
+              >
+                Update
+              </Button>
+            </>
+          )}
+        </form>
       </div>
     </div>
   );
