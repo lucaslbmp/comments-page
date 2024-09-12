@@ -19,8 +19,9 @@ const submitComment = async ({
   const content = data.get("comment-content") as string;
   if (commentId) {
     await updateComment({ id: commentId, content });
+  } else {
+    await createComment({ userId, score: 0, content });
   }
-  createComment({ userId, score: 0, content });
 };
 
 export default submitComment;
