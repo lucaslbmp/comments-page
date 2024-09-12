@@ -5,6 +5,7 @@ import { getImageUrl } from "../_utils";
 import Button from "./button";
 import Image from "next/image";
 import submitComment from "../_actions/submit-comment";
+import TextArea from "./text-area";
 
 interface EditableCommentBoxProps {
   //user: Prisma.UserGetPayload<{ include: { image: true } }> | null;
@@ -39,12 +40,7 @@ const EditableCommentBox = ({
           await submitComment({ data, commentId, userId: userId });
         }}
       >
-        <textarea
-          name="comment-content"
-          rows={3}
-          maxLength={250}
-          className="appearance-none w-full border-border border-2 rounded-md resize-none py-3 px-6 flex-1"
-        />
+        <TextArea name="comment-content" />
 
         <div className="flex-grow-0 flex-shrink-1">
           <Button type="submit" className="w-[5.6rem] py-3">
