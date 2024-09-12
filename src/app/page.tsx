@@ -25,7 +25,7 @@ export default async function Home() {
     <main className="flex min-h-screen max-w-[100vw] flex-col gap-4 justify-between py-24 px-12 w-full items-center">
       <CommentSection
         comments={comments.map((comm) => JSON.parse(JSON.stringify(comm)))}
-        user={user}
+        user={JSON.parse(JSON.stringify(user))}
         className="max-w-[743px]"
       />
       <EditableCommentBox
