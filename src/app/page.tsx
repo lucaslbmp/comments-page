@@ -6,7 +6,15 @@ export default async function Home() {
   const comments = await db.comment.findMany({
     include: {
       user: { include: { image: true } },
-      rootReplies: { include: { user: { include: { image: true } } } },
+      rootReplies: {
+        include: {
+          user: { include: { image: true } },
+          parent: { include: { user: true } },
+        },
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
     },
     where: {
       parentId: null,
