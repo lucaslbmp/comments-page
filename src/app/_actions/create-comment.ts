@@ -8,20 +8,27 @@ interface CreateCommentParams {
   userId: string;
   score: number;
   content: string;
+  parentId?: string;
+  rootCommentId?: string;
 }
 
 const createComment = async ({
   userId,
   score,
   content,
+  parentId,
+  rootCommentId,
 }: CreateCommentParams) => {
   await db.comment.create({
     data: {
       score,
       content,
       userId,
+      parentId: parentId ?? null,
+      rootCommentId,
     },
   });
+
   revalidatePath("/");
 };
 
