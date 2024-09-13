@@ -11,11 +11,18 @@ import { formatDistance } from "date-fns";
 import { useState } from "react";
 import updateComment from "../_actions/update-comment";
 import { getImageUrl } from "../_utils";
-import EditableCommentBox from "./editable-comment-box";
 import { Prisma } from "@prisma/client";
 import TextArea from "./text-area";
 import Button from "./button";
 import submitComment from "../_actions/submit-comment";
+import Modal, {
+  ButtonClose,
+  ButtonDanger,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+} from "./modal";
+import deleteComment from "../_actions/delete-comment";
 
 type CommentBoxProps = {
   comment: FullCommentWithReplies | FullComment;
@@ -27,6 +34,7 @@ const CommentBox = ({ comment, user }: CommentBoxProps) => {
   const isFromUser = comment.user.id === user?.id;
 
   const [editCommentIsOpen, setEditCommentIsOpen] = useState(false);
+  const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
 
   const timePastDate = (date: Date) =>
     formatDistance(date, new Date(), { addSuffix: true });
@@ -105,7 +113,10 @@ const CommentBox = ({ comment, user }: CommentBoxProps) => {
               </button>
             ) : (
               <>
-                <button className="flex items-center gap-2">
+                <button
+                  className="flex items-center gap-2"
+                  onClick={() => setDeleteModalIsOpen(true)}
+                >
                   <Image
                     width={14}
                     height={14}
@@ -167,6 +178,32 @@ const CommentBox = ({ comment, user }: CommentBoxProps) => {
           )}
         </form>
       </div>
+
+      <Modal
+        isOpen={deleteModalIsOpen}
+        onClose={() => setDeleteModalIsOpen(false)}
+      >
+        <ModalHeader>Delete comment</ModalHeader>
+        <ModalBody>
+          {
+            "Are you sure do you want to delete this comment? This will remove the comment and can't be undone."
+          }
+        </ModalBody>
+        <ModalFooter>
+          <form
+            action={async () => {
+              await deleteComment({ id: comment.id });
+              setDeleteModalIsOpen(false);
+            }}
+            className="flex justify-between w-full"
+          >
+            <ButtonClose onClick={() => setDeleteModalIsOpen(false)}>
+              No, cancel
+            </ButtonClose>
+            <ButtonDanger type="submit">Yes, delete</ButtonDanger>
+          </form>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 };
