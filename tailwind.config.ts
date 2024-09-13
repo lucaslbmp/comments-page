@@ -21,7 +21,7 @@ const config: Config = {
         fgSecondary: "#7271aa",
         fgSecondaryLight: "#7777AA",
         border: "#686787",
-        danger: "#D8878B",
+        danger: "#ED6368",
       },
     },
   },
