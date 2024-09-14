@@ -35,13 +35,13 @@ export const ModalFooter = ({ children }: ModalFooterProps) => (
 );
 
 export const ButtonClose = (props: ModalButtonProps) => (
-  <Button {...props} className="bg-fgPrimary text-white w-fit px-9 flex-0">
+  <Button {...props} variant="secondary" className="w-fit px-9">
     {props.children}
   </Button>
 );
 
 export const ButtonDanger = (props: ModalButtonProps) => (
-  <Button {...props} className={"bg-danger text-white w-fit px-9 flex-0"}>
+  <Button {...props} variant="danger" className={"w-fit px-9"}>
     {props.children}
   </Button>
 );

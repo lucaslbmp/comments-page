@@ -55,23 +55,23 @@ const CommentBox = ({ comment, user }: CommentBoxProps) => {
         {/* Score Counter */}
         <div className="basis-[42px] flex flex-col">
           <div className="bg-background rounded-lg flex flex-col gap-6 items-center my-auto">
-            <button
+            <Button
               className="text-xl font-extrabold leading-4 mt-3 text-fgSecondaryLight"
               onClick={() => handleRaiseScore(id, score)}
             >
               <PlusSign size={11} />
-            </button>
+            </Button>
 
             <div className="text-fgSecondary font-semibold">
               {comment.score}
             </div>
 
-            <button
+            <Button
               className="text-xl font-extrabold leading-4 mb-3 text-fgSecondaryLight"
               onClick={() => handleLowerScore(id, score)}
             >
               <MinusSign size={11} />
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -107,7 +107,7 @@ const CommentBox = ({ comment, user }: CommentBoxProps) => {
             {/* Buttons button */}
             <div className="flex-1 flex justify-end gap-6">
               {!isFromUser ? (
-                <button
+                <Button
                   className="flex items-center gap-2"
                   onClick={() => setIsReplyOpen((state) => !state)}
                 >
@@ -118,10 +118,10 @@ const CommentBox = ({ comment, user }: CommentBoxProps) => {
                     src="/icons/icon-reply.svg"
                   />
                   <span className="text-fgSecondary font-bold">Reply</span>
-                </button>
+                </Button>
               ) : (
                 <>
-                  <button
+                  <Button
                     className="flex items-center gap-2"
                     onClick={() => setDeleteModalIsOpen(true)}
                   >
@@ -132,9 +132,9 @@ const CommentBox = ({ comment, user }: CommentBoxProps) => {
                       src="/icons/icon-delete.svg"
                     />
                     <span className="text-danger font-bold">Delete</span>
-                  </button>
+                  </Button>
 
-                  <button
+                  <Button
                     className="flex items-center gap-2"
                     // onClick={(e) =>
                     //   handleEditComment(comment.id, e?.currentTarget?.value)
@@ -148,7 +148,7 @@ const CommentBox = ({ comment, user }: CommentBoxProps) => {
                       src="/icons/icon-edit.svg"
                     />
                     <span className="text-fgSecondary font-bold">Edit</span>
-                  </button>
+                  </Button>
                 </>
               )}
             </div>
@@ -183,7 +183,8 @@ const CommentBox = ({ comment, user }: CommentBoxProps) => {
                 />
                 <Button
                   type="submit"
-                  //onClick={() => setEditCommentIsOpen(false)}
+                  variant="primary"
+                  className="py-3 w-[5.6rem] block ml-auto mr-0"
                 >
                   Update
                 </Button>

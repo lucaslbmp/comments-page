@@ -4,12 +4,13 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: BtnVariantType;
 }
 
-type BtnVariantType = "primary" | "secondary" | "danger";
+type BtnVariantType = "primary" | "secondary" | "danger" | "ghost";
 
 const variantMap: Record<BtnVariantType, string> = {
-  primary: "bg-primary text-white ",
-  secondary: "bg-fgPrimary text-white ",
-  danger: "bg-danger text-white ",
+  primary: "bg-primary text-white p-2 rounded-md w-[5rem] ",
+  secondary: "bg-fgPrimary text-white p-2 rounded-md w-[5rem] ",
+  ghost: "",
+  danger: "bg-danger text-white p-2 rounded-md w-[5rem] ",
 };
 
 const Button = (props: ButtonProps) => {
@@ -17,8 +18,7 @@ const Button = (props: ButtonProps) => {
     <button
       {...props}
       className={twMerge(
-        variantMap[props.variant ?? "primary"] +
-          " p-2 rounded-md uppercase w-[5rem] hover:opacity-70 ",
+        variantMap[props.variant ?? "ghost"] + "  uppercase  hover:opacity-70 ",
         props.className
       )}
     ></button>

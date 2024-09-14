@@ -67,7 +67,7 @@ const EditableCommentBox = ({
         />
 
         <div className="flex-grow-0 flex-shrink-1">
-          <Button type="submit" className="w-[5.6rem] py-3">
+          <Button variant="primary" type="submit" className="w-[5.6rem] ">
             {parentUsername ? "Reply" : "Send"}
           </Button>
         </div>
