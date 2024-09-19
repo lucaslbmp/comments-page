@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/comments-page",
+  //basePath: "/comments-page",
   output: "export", // <=== enables static exports
   reactStrictMode: true,
 };
