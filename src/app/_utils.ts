@@ -3,3 +3,9 @@ export const getImageUrl = (image: Buffer) => {
   const url = `data:image/jpeg;base64,${base64String}`;
   return url;
 };
+
+export const convertToObject = (obj: any) => {
+  const str = JSON.stringify(obj);
+  if (str) return JSON.parse(str);
+  return undefined;
+};
